@@ -314,17 +314,14 @@
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1), 0 4px 16px rgba(0, 0, 0, 0.08);
         }
 
-        .share-btn {
+        .share-buttons-row {
             margin-top: 32px;
-            padding: 14px 32px;
+        }
+
+        .share-btn {
             background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-color: rgba(99, 102, 241, 0.2);
             color: #6366F1;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 12px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
         }
 
@@ -335,17 +332,38 @@
             box-shadow: 0 4px 16px rgba(99, 102, 241, 0.2);
         }
 
+        .share-buttons-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .share-btn,
         .clear-btn {
-            margin-top: 12px;
-            padding: 14px 32px;
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.15);
-            color: #EF4444;
+            padding: 14px 28px;
             font-size: 15px;
             font-weight: 500;
+            line-height: 1;
             cursor: pointer;
             border-radius: 12px;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 48px;
+            margin: 0;
+        }
+
+        .clear-btn {
+            background: rgba(239, 68, 68, 0.08);
+            border-color: rgba(239, 68, 68, 0.15);
+            color: #EF4444;
             box-shadow: 0 2px 8px rgba(239, 68, 68, 0.1);
         }
 
@@ -894,13 +912,25 @@
                 margin-top: 24px;
             }
 
-            .share-input-container {
+            .share-buttons-row {
                 flex-direction: column;
                 gap: 10px;
             }
 
-            .load-btn {
+            .share-btn,
+            .clear-btn {
                 width: 100%;
+            }
+
+            .share-input-container {
+                flex-direction: row;
+                gap: 8px;
+            }
+
+            .load-btn {
+                width: auto;
+                flex-shrink: 0;
+                white-space: nowrap;
             }
         }
 
@@ -929,11 +959,6 @@
                     <button class="submit-btn" data-type="想念你">提交</button>
                 </div>
                 <div class="button-row">
-                    <button class="emotion-btn" data-type="谢谢你">谢谢你</button>
-                    <input type="text" class="text-input" data-type="谢谢你" placeholder="想说些什么...">
-                    <button class="submit-btn" data-type="谢谢你">提交</button>
-                </div>
-                <div class="button-row">
                     <button class="emotion-btn" data-type="对不起">对不起</button>
                     <input type="text" class="text-input" data-type="对不起" placeholder="想说些什么...">
                     <button class="submit-btn" data-type="对不起">提交</button>
@@ -942,6 +967,11 @@
                     <button class="emotion-btn" data-type="请原谅">请原谅</button>
                     <input type="text" class="text-input" data-type="请原谅" placeholder="想说些什么...">
                     <button class="submit-btn" data-type="请原谅">提交</button>
+                </div>
+                <div class="button-row">
+                    <button class="emotion-btn" data-type="谢谢你">谢谢你</button>
+                    <input type="text" class="text-input" data-type="谢谢你" placeholder="想说些什么...">
+                    <button class="submit-btn" data-type="谢谢你">提交</button>
                 </div>
                 <div class="button-row">
                     <button class="emotion-btn" data-type="我爱你">我爱你</button>
@@ -962,8 +992,10 @@
             </div>
 
             <div class="share-section">
-                <button class="share-btn" id="shareBtn">分享</button>
-                <button class="clear-btn" id="clearBtn">清理数据</button>
+                <div class="share-buttons-row">
+                    <button class="share-btn" id="shareBtn">分享</button>
+                    <button class="clear-btn" id="clearBtn">清理数据</button>
+                </div>
                 <div class="share-input-container">
                     <input type="text" class="share-input" id="shareInput" placeholder="粘贴分享链接，查看复盘页面...">
                     <button class="load-btn" id="loadBtn">加载复盘</button>
@@ -1030,7 +1062,8 @@
                 '这一周，我们已在彼此的生命里，停留了这么久',
                 '本周相伴进度⬇️',
                 '我们在宇宙中存在了一周的证据',
-                '一周结束后，一起创造重逢的奇迹'
+                '一周结束后，一起创造重逢的奇迹',
+                '深呼吸，请你想着对方，把一周的思念装在这里'
             ];
             
             // 获取当前显示的索引，如果没有则从0开始
