@@ -217,6 +217,7 @@
             flex: 1;
             font-weight: 500;
             line-height: 1.5;
+            text-align: left;
         }
 
         .refresh-btn {
@@ -802,6 +803,92 @@
             border-color: rgba(99, 102, 241, 0.3);
             transform: translateY(-1px);
             box-shadow: 0 4px 16px rgba(99, 102, 241, 0.2);
+        }
+
+        /* 移动端响应式样式 */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 16px;
+            }
+
+            .page {
+                max-width: 100%;
+            }
+
+            .buttons-container {
+                gap: 10px;
+            }
+
+            .button-row {
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .emotion-btn {
+                padding: 12px 20px;
+                font-size: 14px;
+                min-width: 80px;
+            }
+
+            .text-input {
+                max-width: 100%;
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+
+            .submit-btn {
+                padding: 12px 18px;
+                font-size: 13px;
+                width: 70px;
+            }
+
+            .question-section {
+                padding: 20px 16px;
+                margin-top: 32px;
+            }
+
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .question-text {
+                width: 100%;
+            }
+
+            .refresh-btn {
+                align-self: flex-end;
+                margin-left: 0;
+            }
+
+            .clock {
+                font-size: 48px;
+                margin-bottom: 32px;
+            }
+
+            .title-greeting {
+                font-size: 16px;
+                margin-bottom: 24px;
+            }
+
+            .heart-icon {
+                font-size: 44px;
+                margin-bottom: 20px;
+            }
+
+            .share-section {
+                margin-top: 24px;
+            }
+
+            .share-input-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .load-btn {
+                width: 100%;
+            }
         }
 
         @media print {
