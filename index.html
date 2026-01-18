@@ -70,14 +70,6 @@
             opacity: 0.85;
         }
 
-        .buttons-hint {
-            text-align: center;
-            font-size: 15px;
-            color: #6B7280;
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
-
         .buttons-container {
             display: flex;
             flex-direction: column;
@@ -91,36 +83,191 @@
             gap: 12px;
             justify-content: center;
             position: relative;
+            width: 100%;
         }
 
         .emotion-btn {
-            padding: 14px 28px;
-            background: rgba(255, 255, 255, 0.8);
+            padding: 18px 40px;
+            background: rgba(147, 197, 253, 0.3);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            color: #1D1D1F;
-            font-size: 15px;
+            border: 1px solid rgba(147, 197, 253, 0.4);
+            color: #1E40AF;
+            font-size: 16px;
             font-weight: 500;
             cursor: pointer;
             border-radius: 12px;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            min-width: 100px;
+            min-width: 160px;
+            width: 100%;
+            max-width: 400px;
             position: relative;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 2px 8px rgba(147, 197, 253, 0.2);
         }
 
         .emotion-btn:hover {
-            background: rgba(255, 255, 255, 1);
+            background: rgba(147, 197, 253, 0.4);
             transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-            border-color: rgba(99, 102, 241, 0.3);
-            color: #6366F1;
+            box-shadow: 0 4px 16px rgba(147, 197, 253, 0.3);
+            border-color: rgba(147, 197, 253, 0.5);
         }
 
         .emotion-btn:active {
             transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(147, 197, 253, 0.2);
+        }
+
+        .chatter-btn {
+            padding: 18px 40px;
+            background: rgba(254, 243, 199, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(254, 243, 199, 0.8);
+            color: #92400E;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 160px;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(254, 243, 199, 0.3);
+        }
+
+        .chatter-btn:hover {
+            background: rgba(254, 243, 199, 0.8);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(254, 243, 199, 0.4);
+            border-color: rgba(254, 243, 199, 1);
+        }
+
+        .chatter-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(254, 243, 199, 0.3);
+        }
+
+        /* 碎碎念弹出框样式 */
+        .chatter-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chatter-modal.active {
+            display: flex;
+        }
+
+        .chatter-modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            padding: 32px;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .chatter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chatter-header h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1D1D1F;
+            margin: 0;
+        }
+
+        .chatter-close-btn {
+            background: transparent;
+            border: none;
+            font-size: 32px;
+            color: #6B7280;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .chatter-close-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: #1D1D1F;
+        }
+
+        .chatter-input {
+            width: 100%;
+            min-height: calc(15px * 1.6 * 5 + 32px);
+            max-height: calc(15px * 1.6 * 5 + 32px);
+            padding: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            font-size: 15px;
+            color: #1D1D1F;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            resize: none;
+            font-family: inherit;
+            line-height: 1.6;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        .chatter-input:focus {
+            outline: none;
+            border-color: #6366F1;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1), 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .chatter-submit-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+
+        .chatter-submit-btn {
+            padding: 12px 24px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: #6366F1;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+        }
+
+        .chatter-submit-btn:hover {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.2);
         }
 
         .text-input {
@@ -628,6 +775,15 @@
             line-height: 1.6;
         }
 
+        .count-highlight {
+            font-weight: bold;
+            color: #6366F1;
+        }
+
+        .item-type {
+            line-height: 1.8;
+        }
+
         .question-pair {
             margin-bottom: 30px;
             padding: 20px;
@@ -736,6 +892,82 @@
             flex: 1;
         }
 
+        /* 碎碎念部分样式 */
+        .chatter-section {
+            margin-bottom: 32px;
+            padding: 28px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .chatter-section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #1D1D1F;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .chatter-columns {
+            display: flex;
+            gap: 20px;
+        }
+
+        .chatter-column {
+            flex: 1;
+        }
+
+        .chatter-column-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1D1D1F;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .chatter-entry {
+            margin-bottom: 20px;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.9);
+            border-left: 3px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .chatter-entry:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .chatter-date {
+            font-size: 12px;
+            color: #6366F1;
+            margin-bottom: 10px;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+
+        .chatter-content {
+            font-size: 15px;
+            color: #4B5563;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .empty-chatter {
+            text-align: center;
+            padding: 40px;
+            color: #9CA3AF;
+            font-size: 14px;
+        }
+
         .review-actions {
             display: flex;
             justify-content: center;
@@ -841,11 +1073,6 @@
                 max-width: 100%;
             }
 
-            .buttons-hint {
-                font-size: 14px;
-                margin-bottom: 20px;
-            }
-
             .buttons-container {
                 gap: 10px;
             }
@@ -856,19 +1083,17 @@
                 align-items: stretch;
             }
 
-            .emotion-btn {
-                padding: 12px 16px;
-                font-size: 14px;
-                min-width: 70px;
-                flex-shrink: 0;
+            .emotion-btn,
+            .chatter-btn {
+                padding: 16px 32px;
+                font-size: 15px;
+                min-width: 140px;
+                max-width: 100%;
             }
 
-            .text-input {
-                flex: 1;
-                min-width: 0;
-                max-width: none;
-                padding: 12px 14px;
-                font-size: 14px;
+            .chatter-modal-content {
+                padding: 24px;
+                width: 95%;
             }
 
             .submit-btn {
@@ -965,33 +1190,38 @@
             <div id="titleGreeting" class="title-greeting">标题寄语</div>
             <div id="clock" class="clock">00:00:00</div>
             
-            <div class="buttons-hint">点击左侧咒语，安静记录心意，文字留住思绪</div>
-            
             <div class="buttons-container">
                 <div class="button-row">
                     <button class="emotion-btn" data-type="想念你">想念你</button>
-                    <input type="text" class="text-input" data-type="想念你" placeholder="想说些什么...">
-                    <button class="submit-btn" data-type="想念你">提交</button>
                 </div>
                 <div class="button-row">
                     <button class="emotion-btn" data-type="对不起">对不起</button>
-                    <input type="text" class="text-input" data-type="对不起" placeholder="想说些什么...">
-                    <button class="submit-btn" data-type="对不起">提交</button>
                 </div>
                 <div class="button-row">
                     <button class="emotion-btn" data-type="请原谅">请原谅</button>
-                    <input type="text" class="text-input" data-type="请原谅" placeholder="想说些什么...">
-                    <button class="submit-btn" data-type="请原谅">提交</button>
                 </div>
                 <div class="button-row">
                     <button class="emotion-btn" data-type="谢谢你">谢谢你</button>
-                    <input type="text" class="text-input" data-type="谢谢你" placeholder="想说些什么...">
-                    <button class="submit-btn" data-type="谢谢你">提交</button>
                 </div>
                 <div class="button-row">
                     <button class="emotion-btn" data-type="我爱你">我爱你</button>
-                    <input type="text" class="text-input" data-type="我爱你" placeholder="想说些什么...">
-                    <button class="submit-btn" data-type="我爱你">提交</button>
+                </div>
+                <div class="button-row">
+                    <button class="chatter-btn" id="chatterBtn">碎碎念</button>
+                </div>
+            </div>
+
+            <!-- 碎碎念弹出框 -->
+            <div id="chatterModal" class="chatter-modal">
+                <div class="chatter-modal-content">
+                    <div class="chatter-header">
+                        <h3>碎碎念</h3>
+                        <button class="chatter-close-btn" id="chatterCloseBtn">×</button>
+                    </div>
+                    <textarea class="chatter-input" id="chatterInput" placeholder="写下你的碎碎念..."></textarea>
+                    <div class="chatter-submit-container">
+                        <button class="chatter-submit-btn" id="chatterSubmitBtn">提交</button>
+                    </div>
                 </div>
             </div>
 
@@ -1033,6 +1263,8 @@
                     <div class="timeline-line"></div>
                 </div>
             </div>
+
+            <div id="chatterSection"></div>
 
             <div id="questionPairs"></div>
 
@@ -1138,54 +1370,56 @@
             buttons.forEach(btn => {
                 btn.addEventListener('click', function() {
                     const type = this.getAttribute('data-type');
-                    const input = document.querySelector(`.text-input[data-type="${type}"]`);
-                    const text = input.value.trim();
-                    
-                    if (text) {
-                        saveRecord(type, text, this);
-                        input.value = '';
-                    } else {
-                        saveRecord(type, '', this);
-                    }
+                    saveRecord(type, '', this);
                 });
             });
 
-            // 提交按钮事件
-            const submitButtons = document.querySelectorAll('.submit-btn');
-            submitButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const type = this.getAttribute('data-type');
-                    const input = document.querySelector(`.text-input[data-type="${type}"]`);
-                    const text = input.value.trim();
-                    
-                    if (text) {
-                        saveRecord(type, text, this);
-                        input.value = ''; // 提交后清空文本框
-                        // 简单的提交反馈
-                        this.textContent = '已提交';
-                        this.style.backgroundColor = '#8B5CF6';
-                        this.style.color = '#ffffff';
-                        setTimeout(() => {
-                            this.textContent = '提交';
-                            this.style.backgroundColor = 'transparent';
-                            this.style.color = '#8B5CF6';
-                        }, 1000);
-                    } else {
-                        alert('请输入内容后再提交');
-                    }
-                });
+            // 碎碎念按钮事件
+            const chatterBtn = document.getElementById('chatterBtn');
+            const chatterModal = document.getElementById('chatterModal');
+            const chatterCloseBtn = document.getElementById('chatterCloseBtn');
+            const chatterSubmitBtn = document.getElementById('chatterSubmitBtn');
+            const chatterInput = document.getElementById('chatterInput');
+
+            chatterBtn.addEventListener('click', function() {
+                chatterModal.classList.add('active');
+                setTimeout(() => {
+                    chatterInput.focus();
+                }, 100);
             });
 
-            // 文本框回车提交
-            const textInputs = document.querySelectorAll('.text-input');
-            textInputs.forEach(input => {
-                input.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        const type = this.getAttribute('data-type');
-                        const submitBtn = document.querySelector(`.submit-btn[data-type="${type}"]`);
-                        submitBtn.click();
-                    }
-                });
+            chatterCloseBtn.addEventListener('click', function() {
+                chatterModal.classList.remove('active');
+                chatterInput.value = '';
+            });
+
+            // 点击模态框外部关闭
+            chatterModal.addEventListener('click', function(e) {
+                if (e.target === chatterModal) {
+                    chatterModal.classList.remove('active');
+                    chatterInput.value = '';
+                }
+            });
+
+            // 碎碎念提交
+            chatterSubmitBtn.addEventListener('click', function() {
+                const text = chatterInput.value.trim();
+                if (text) {
+                    saveRecord('碎碎念', text, this);
+                    chatterModal.classList.remove('active');
+                    chatterInput.value = '';
+                    // 显示+1动画
+                    showPlusOne(chatterBtn, '💭');
+                } else {
+                    alert('请输入内容后再提交');
+                }
+            });
+
+            // 碎碎念文本框回车提交
+            chatterInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && e.ctrlKey) {
+                    chatterSubmitBtn.click();
+                }
             });
         }
 
@@ -1199,21 +1433,22 @@
             '对不起': '😔',
             '请原谅': '🙇',
             '我爱你': '❤️',
+            '碎碎念': '💭',
             'question': '✨'
         };
 
-        // 显示emoji动画
+        // 显示emoji+1动画
         function showPlusOne(button, emoji) {
             const plusOne = document.createElement('div');
             plusOne.className = 'plus-one';
-            plusOne.textContent = emoji || '✨';
+            plusOne.textContent = (emoji || '✨') + '+1';
             
             // 获取按钮位置
             const rect = button.getBoundingClientRect();
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
             
-            plusOne.style.left = (rect.left + rect.width / 2 - 15 + scrollLeft) + 'px';
+            plusOne.style.left = (rect.left + rect.width / 2 - 25 + scrollLeft) + 'px';
             plusOne.style.top = (rect.top - 10 + scrollTop) + 'px';
             
             document.body.appendChild(plusOne);
@@ -1399,6 +1634,24 @@
             return { question: '', answer: '' };
         }
 
+        // 缩短URL
+        async function shortenUrl(longUrl) {
+            try {
+                // 使用 is.gd API 缩短URL
+                const response = await fetch(`https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`);
+                const data = await response.json();
+                if (data.shorturl) {
+                    return data.shorturl;
+                } else {
+                    throw new Error('缩短失败');
+                }
+            } catch (error) {
+                console.error('URL缩短失败:', error);
+                // 如果缩短失败，返回null，使用原始URL
+                return null;
+            }
+        }
+
         // 分享功能
         function initShare() {
             document.getElementById('shareBtn').addEventListener('click', function() {
@@ -1438,19 +1691,37 @@
                     // window.location.origin: 协议+域名+端口 (如 https://username.github.io)
                     // window.location.pathname: 路径部分 (如 /repository-name/index.html 或 /index.html)
                     // 这样生成的链接可以在任何部署环境下正常工作
-                    const url = window.location.origin + window.location.pathname + '?data=' + base64;
+                    const longUrl = window.location.origin + window.location.pathname + '?data=' + base64;
                     
-                    navigator.clipboard.writeText(url).then(() => {
-                        alert('分享链接已复制到剪贴板！');
+                    // 缩短URL
+                    shortenUrl(longUrl).then(shortUrl => {
+                        const finalUrl = shortUrl || longUrl; // 如果缩短失败，使用原始URL
+                        navigator.clipboard.writeText(finalUrl).then(() => {
+                            alert('分享链接已复制到剪贴板！');
+                        }).catch(() => {
+                            // 降级方案
+                            const textarea = document.createElement('textarea');
+                            textarea.value = finalUrl;
+                            document.body.appendChild(textarea);
+                            textarea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textarea);
+                            alert('分享链接已复制到剪贴板！');
+                        });
                     }).catch(() => {
-                        // 降级方案
-                        const textarea = document.createElement('textarea');
-                        textarea.value = url;
-                        document.body.appendChild(textarea);
-                        textarea.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(textarea);
-                        alert('分享链接已复制到剪贴板！');
+                        // 如果缩短失败，使用原始URL
+                        navigator.clipboard.writeText(longUrl).then(() => {
+                            alert('分享链接已复制到剪贴板！');
+                        }).catch(() => {
+                            // 降级方案
+                            const textarea = document.createElement('textarea');
+                            textarea.value = longUrl;
+                            document.body.appendChild(textarea);
+                            textarea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textarea);
+                            alert('分享链接已复制到剪贴板！');
+                        });
                     });
                 } catch (error) {
                     alert('分享失败，请重试');
@@ -1458,7 +1729,7 @@
             });
 
             // 加载复盘页面按钮
-            document.getElementById('loadBtn').addEventListener('click', function() {
+            document.getElementById('loadBtn').addEventListener('click', async function() {
                 const shareInput = document.getElementById('shareInput');
                 const url = shareInput.value.trim();
                 
@@ -1470,16 +1741,32 @@
                 // 解析URL中的data参数
                 try {
                     let dataParam = '';
-                    if (url.includes('?data=')) {
+                    let urlToParse = url;
+                    
+                    // 如果是缩短的URL（如 is.gd），需要先获取原始URL
+                    if (url.includes('is.gd/') || url.includes('v.gd/') || url.includes('tinyurl.com/')) {
+                        // 尝试获取原始URL
+                        try {
+                            const response = await fetch(`https://is.gd/forward.php?format=json&shorturl=${encodeURIComponent(url)}`);
+                            const data = await response.json();
+                            if (data.url) {
+                                urlToParse = data.url;
+                            }
+                        } catch (e) {
+                            console.error('获取原始URL失败:', e);
+                        }
+                    }
+                    
+                    if (urlToParse.includes('?data=')) {
                         // 完整URL格式
-                        const urlObj = new URL(url);
+                        const urlObj = new URL(urlToParse);
                         dataParam = urlObj.searchParams.get('data');
-                    } else if (url.startsWith('data=')) {
+                    } else if (urlToParse.startsWith('data=')) {
                         // 只有data参数
-                        dataParam = url.substring(5);
+                        dataParam = urlToParse.substring(5);
                     } else {
                         // 尝试直接作为base64解码
-                        dataParam = url;
+                        dataParam = urlToParse;
                     }
                     
                     if (!dataParam) {
@@ -1583,6 +1870,7 @@
             // rightRecords = source: 'my' (当前查看者) -> 右边
             // 所以：分享者作为第二个参数（source: 'other' -> 左边），当前查看者作为第一个参数（source: 'my' -> 右边）
             renderUnifiedTimeline(currentUserRecords, sharedUserRecords);
+            renderChatter(currentUserRecords, sharedUserRecords, nickname);
             renderQuestionPairs(currentUserQuestions, sharedUserQuestions, nickname);
         }
 
@@ -1625,10 +1913,13 @@
                 container.appendChild(timelineLine);
             }
             
-            // 合并所有记录并标记来源
+            // 定义五个按钮类型（不显示文本，只显示时间和状态）
+            const buttonTypes = ['想念你', '对不起', '请原谅', '谢谢你', '我爱你'];
+            
+            // 合并所有记录并标记来源，过滤掉碎碎念类型
             const allRecords = [
-                ...myRecords.map(r => ({ ...r, source: 'my' })),
-                ...otherRecords.map(r => ({ ...r, source: 'other' }))
+                ...myRecords.filter(r => r.type !== '碎碎念').map(r => ({ ...r, source: 'my' })),
+                ...otherRecords.filter(r => r.type !== '碎碎念').map(r => ({ ...r, source: 'other' }))
             ];
             
             if (allRecords.length === 0) {
@@ -1667,76 +1958,23 @@
                 return miracleRecords.has(record.timestamp);
             };
             
-            // 按时间分组，5分钟内的内容视为同一高度
-            const TIME_WINDOW = 5 * 60 * 1000; // 5分钟
-            const MINUTE_WINDOW = 60 * 1000; // 1分钟（用于合并同一分钟内的多个按钮点击）
+            // 按10分钟窗口分组，使用最早的时间戳
+            const TIME_WINDOW = 10 * 60 * 1000; // 10分钟
             
-            // 先按分钟分组，合并同一分钟内的多个按钮点击
-            const minuteGroups = {};
-            sortedRecords.forEach(record => {
-                const date = new Date(record.timestamp);
-                const minuteKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-                const sourceKey = `${minuteKey}_${record.source}`;
-                
-                if (!minuteGroups[sourceKey]) {
-                    minuteGroups[sourceKey] = {
-                        timestamp: record.timestamp,
-                        source: record.source,
-                        records: []
-                    };
-                }
-                minuteGroups[sourceKey].records.push(record);
-            });
-            
-            // 将分钟分组转换为记录数组（合并后的）
-            const mergedRecords = Object.values(minuteGroups).map(group => {
-                if (group.records.length === 1) {
-                    const record = group.records[0];
-                    timestampToMergedRecord.set(record.timestamp, record);
-                    return record;
-                } else {
-                    // 合并同一分钟内的多个按钮点击
-                    // 按钮类型去重，只显示一次
-                    const uniqueTypes = [...new Set(group.records.map(r => r.type))];
-                    const type = uniqueTypes.join('、');
-                    
-                    // 文本保留所有不同的内容，用分号连接
-                    const texts = group.records.map(r => r.text).filter(t => t && t.trim() !== '');
-                    // 去重但保留顺序
-                    const uniqueTexts = [];
-                    const seenTexts = new Set();
-                    texts.forEach(t => {
-                        if (!seenTexts.has(t)) {
-                            seenTexts.add(t);
-                            uniqueTexts.push(t);
-                        }
-                    });
-                    const text = uniqueTexts.length > 0 ? uniqueTexts.join('；') : '(无文字)';
-                    
-                    const merged = {
-                        timestamp: group.timestamp,
-                        source: group.source,
-                        type: type,
-                        text: text,
-                        merged: true,
-                        originalRecords: group.records
-                    };
-                    // 为合并记录的所有原始时间戳建立映射
-                    group.records.forEach(r => {
-                        timestampToMergedRecord.set(r.timestamp, merged);
-                    });
-                    return merged;
-                }
-            });
-            
-            // 按5分钟窗口分组
+            // 按10分钟窗口分组，并统计每个按钮类型的出现次数
             const timeGroups = [];
-            mergedRecords.forEach(record => {
-                // 查找是否有相近时间的组（5分钟内）
+            sortedRecords.forEach(record => {
+                // 查找是否有相近时间的组（10分钟内）
                 let foundGroup = false;
                 for (let i = 0; i < timeGroups.length; i++) {
                     const groupTime = timeGroups[i].time;
-                    if (Math.abs(record.timestamp - groupTime) < TIME_WINDOW) {
+                    // 检查是否在10分钟窗口内，且来源相同
+                    if (Math.abs(record.timestamp - groupTime) < TIME_WINDOW && 
+                        timeGroups[i].source === record.source) {
+                        // 如果新记录时间更早，更新组的时间戳
+                        if (record.timestamp < groupTime) {
+                            timeGroups[i].time = record.timestamp;
+                        }
                         timeGroups[i].records.push(record);
                         foundGroup = true;
                         break;
@@ -1746,138 +1984,255 @@
                 if (!foundGroup) {
                     timeGroups.push({
                         time: record.timestamp,
+                        source: record.source,
                         records: [record]
                     });
                 }
             });
             
-            // 按时间顺序展示
-            timeGroups.sort((a, b) => a.time - b.time).forEach(group => {
-                const records = group.records;
+            // 处理每个时间组，合并相同按钮类型并统计次数
+            const processedRecords = timeGroups.map(group => {
+                // 按类型分组并统计次数
+                const typeCounts = {};
+                group.records.forEach(record => {
+                    if (!typeCounts[record.type]) {
+                        typeCounts[record.type] = {
+                            count: 0,
+                            records: []
+                        };
+                    }
+                    typeCounts[record.type].count++;
+                    typeCounts[record.type].records.push(record);
+                });
                 
-                // 分离左右两侧的记录
-                // 左侧显示分享者的记录（[昵称]的记录），右侧显示当前查看者的记录（我的记录）
-                // source: 'other' (分享者) 显示在左边，source: 'my' (当前查看者) 显示在右边
-                const leftRecords = records.filter(r => r.source === 'other').sort((a, b) => a.timestamp - b.timestamp);
-                const rightRecords = records.filter(r => r.source === 'my').sort((a, b) => a.timestamp - b.timestamp);
+                // 构建显示文本：状态文字+emoji++次数（换行分隔）
+                const typeDisplay = Object.keys(typeCounts).map(type => {
+                    const count = typeCounts[type].count;
+                    const emoji = buttonEmojiMap[type] || '';
+                    if (buttonTypes.includes(type)) {
+                        // 按钮类型：显示"状态文字+emoji++次数"，+数字部分加粗高亮玫红色
+                        if (count > 1) {
+                            return `${type}${emoji}<span class="count-highlight">+${count}</span>`;
+                        } else {
+                            return `${type}${emoji}`;
+                        }
+                    } else {
+                        // 其他类型：显示类型名称
+                        return type;
+                    }
+                }).join('<br>');
                 
-                // 如果同一侧有多个记录，按时间顺序展示（不并排）
-                if (leftRecords.length > 1 || rightRecords.length > 1) {
-                    // 按时间顺序展示所有记录
-                    const allRecordsSorted = [...leftRecords, ...rightRecords].sort((a, b) => a.timestamp - b.timestamp);
-                    allRecordsSorted.forEach(record => {
-                        // source: 'other' (分享者) 在左边，source: 'my' (当前查看者) 在右边
-                        const side = record.source === 'my' ? 'right' : 'left';
-                        const isMiracle = isMergedRecordMiracle(record);
-                        
-                        const rowContainer = document.createElement('div');
-                        rowContainer.className = 'timeline-row';
-                        
-                        if (side === 'left') {
-                            const placeholder = document.createElement('div');
-                            placeholder.className = 'timeline-item-placeholder';
-                            rowContainer.appendChild(placeholder);
-                        }
-                        
-                        const item = document.createElement('div');
-                        // 确保类名格式正确：timeline-item left miracle 或 timeline-item right miracle
-                        item.className = 'timeline-item';
-                        item.classList.add(side);
-                        if (isMiracle) {
-                            item.classList.add('miracle');
-                        }
-                        
-                        const time = new Date(record.timestamp);
-                        const timeStr = `${time.getFullYear()}-${String(time.getMonth() + 1).padStart(2, '0')}-${String(time.getDate()).padStart(2, '0')} ${String(time.getHours()).padStart(2, '0')}:${String(time.getMinutes()).padStart(2, '0')}`;
-                        
-                        item.innerHTML = `
-                            <div class="item-time">${timeStr}</div>
-                            <div class="item-type">${record.type}</div>
-                            <div class="item-text">${record.text || '(无文字)'}</div>
-                        `;
-                        
-                        rowContainer.appendChild(item);
-                        
-                        if (side === 'right') {
-                            const placeholder = document.createElement('div');
-                            placeholder.className = 'timeline-item-placeholder';
-                            rowContainer.appendChild(placeholder);
-                        }
-                        
-                        container.appendChild(rowContainer);
+                return {
+                    timestamp: group.time, // 使用最早的时间戳
+                    source: group.source,
+                    type: typeDisplay,
+                    text: '',
+                    merged: true,
+                    originalRecords: group.records
+                };
+            });
+            
+            // 按时间顺序展示处理后的记录
+            processedRecords.sort((a, b) => a.timestamp - b.timestamp).forEach(record => {
+                // 为奇迹判断建立映射
+                if (record.originalRecords) {
+                    record.originalRecords.forEach(r => {
+                        timestampToMergedRecord.set(r.timestamp, record);
                     });
                 } else {
-                    // 只有一个或两个记录（左右各一个），并排显示
-                    // 如果只有一侧有记录，不显示空的placeholder，只显示有记录的那一侧
-                    if (leftRecords.length === 0 && rightRecords.length === 0) {
-                        return; // 跳过空组
-                    }
-                    
-                    const rowContainer = document.createElement('div');
-                    rowContainer.className = 'timeline-row';
-                    
-                    // 左侧记录
-                    if (leftRecords.length > 0) {
-                        const record = leftRecords[0];
-                        const isMiracle = isMergedRecordMiracle(record);
-                        
-                        const item = document.createElement('div');
-                        item.className = `timeline-item left${isMiracle ? ' miracle' : ''}`;
-                        // 确保类名格式正确：timeline-item left miracle
-                        if (isMiracle) {
-                            item.classList.add('left', 'miracle');
-                        } else {
-                            item.classList.add('left');
+                    timestampToMergedRecord.set(record.timestamp, record);
+                }
+            });
+            
+            // 为奇迹判断建立映射
+            processedRecords.forEach(record => {
+                if (record.originalRecords) {
+                    record.originalRecords.forEach(r => {
+                        timestampToMergedRecord.set(r.timestamp, record);
+                    });
+                } else {
+                    timestampToMergedRecord.set(record.timestamp, record);
+                }
+            });
+            
+            // 按时间分组，相近时间的记录并排显示
+            const DISPLAY_TIME_WINDOW = 60 * 1000; // 1分钟内视为同一时间
+            const displayGroups = [];
+            
+            processedRecords.sort((a, b) => a.timestamp - b.timestamp).forEach(record => {
+                // 查找是否有相近时间的组（1分钟内）
+                let foundGroup = false;
+                for (let i = 0; i < displayGroups.length; i++) {
+                    const groupTime = displayGroups[i].time;
+                    if (Math.abs(record.timestamp - groupTime) < DISPLAY_TIME_WINDOW) {
+                        displayGroups[i].records.push(record);
+                        // 如果新记录时间更早，更新组的时间戳
+                        if (record.timestamp < groupTime) {
+                            displayGroups[i].time = record.timestamp;
                         }
-                        
-                        const time = new Date(record.timestamp);
-                        const timeStr = `${time.getFullYear()}-${String(time.getMonth() + 1).padStart(2, '0')}-${String(time.getDate()).padStart(2, '0')} ${String(time.getHours()).padStart(2, '0')}:${String(time.getMinutes()).padStart(2, '0')}`;
-                        
-                        item.innerHTML = `
-                            <div class="item-time">${timeStr}</div>
-                            <div class="item-type">${record.type}</div>
-                            <div class="item-text">${record.text || '(无文字)'}</div>
-                        `;
-                        
-                        rowContainer.appendChild(item);
-                    }
-                    // 如果左侧没有记录，不添加placeholder
-                    
-                    // 右侧记录
-                    if (rightRecords.length > 0) {
-                        const record = rightRecords[0];
-                        const isMiracle = isMergedRecordMiracle(record);
-                        
-                        const item = document.createElement('div');
-                        item.className = `timeline-item right${isMiracle ? ' miracle' : ''}`;
-                        // 确保类名格式正确：timeline-item right miracle
-                        if (isMiracle) {
-                            item.classList.add('right', 'miracle');
-                        } else {
-                            item.classList.add('right');
-                        }
-                        
-                        const time = new Date(record.timestamp);
-                        const timeStr = `${time.getFullYear()}-${String(time.getMonth() + 1).padStart(2, '0')}-${String(time.getDate()).padStart(2, '0')} ${String(time.getHours()).padStart(2, '0')}:${String(time.getMinutes()).padStart(2, '0')}`;
-                        
-                        item.innerHTML = `
-                            <div class="item-time">${timeStr}</div>
-                            <div class="item-type">${record.type}</div>
-                            <div class="item-text">${record.text || '(无文字)'}</div>
-                        `;
-                        
-                        rowContainer.appendChild(item);
-                    }
-                    // 如果右侧没有记录，不添加placeholder
-                    
-                    // 只有当至少一侧有记录时才添加到容器
-                    if (leftRecords.length > 0 || rightRecords.length > 0) {
-                        container.appendChild(rowContainer);
+                        foundGroup = true;
+                        break;
                     }
                 }
+                // 如果没有找到相近的组，创建新组
+                if (!foundGroup) {
+                    displayGroups.push({
+                        time: record.timestamp,
+                        records: [record]
+                    });
+                }
+            });
+            
+            // 按时间顺序展示分组后的记录
+            displayGroups.sort((a, b) => a.time - b.time).forEach(group => {
+                const leftRecords = group.records.filter(r => r.source === 'other').sort((a, b) => a.timestamp - b.timestamp);
+                const rightRecords = group.records.filter(r => r.source === 'my').sort((a, b) => a.timestamp - b.timestamp);
+                
+                // 如果只有一侧有记录，不显示空的placeholder，只显示有记录的那一侧
+                if (leftRecords.length === 0 && rightRecords.length === 0) {
+                    return; // 跳过空组
+                }
+                
+                const rowContainer = document.createElement('div');
+                rowContainer.className = 'timeline-row';
+                
+                // 使用最早的时间戳作为显示时间
+                const displayTime = group.time;
+                const time = new Date(displayTime);
+                const timeStr = `${time.getFullYear()}-${String(time.getMonth() + 1).padStart(2, '0')}-${String(time.getDate()).padStart(2, '0')} ${String(time.getHours()).padStart(2, '0')}:${String(time.getMinutes()).padStart(2, '0')}`;
+                
+                // 左侧记录
+                if (leftRecords.length > 0) {
+                    const record = leftRecords[0];
+                    const isMiracle = isMergedRecordMiracle(record);
+                    
+                    const item = document.createElement('div');
+                    item.className = 'timeline-item left';
+                    if (isMiracle) {
+                        item.classList.add('miracle');
+                    }
+                    
+                    item.innerHTML = `
+                        <div class="item-time">${timeStr}</div>
+                        <div class="item-type">${record.type}</div>
+                    `;
+                    
+                    rowContainer.appendChild(item);
+                } else {
+                    // 如果左侧没有记录，添加placeholder
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'timeline-item-placeholder';
+                    rowContainer.appendChild(placeholder);
+                }
+                
+                // 右侧记录
+                if (rightRecords.length > 0) {
+                    const record = rightRecords[0];
+                    const isMiracle = isMergedRecordMiracle(record);
+                    
+                    const item = document.createElement('div');
+                    item.className = 'timeline-item right';
+                    if (isMiracle) {
+                        item.classList.add('miracle');
+                    }
+                    
+                    item.innerHTML = `
+                        <div class="item-time">${timeStr}</div>
+                        <div class="item-type">${record.type}</div>
+                    `;
+                    
+                    rowContainer.appendChild(item);
+                } else {
+                    // 如果右侧没有记录，添加placeholder
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'timeline-item-placeholder';
+                    rowContainer.appendChild(placeholder);
+                }
+                
+                container.appendChild(rowContainer);
             });
         }
 
+
+        // 渲染碎碎念部分
+        function renderChatter(myRecords, otherRecords, nickname = '对方') {
+            const container = document.getElementById('chatterSection');
+            container.innerHTML = '';
+            
+            // 筛选出碎碎念类型的记录
+            const myChatter = myRecords.filter(r => r.type === '碎碎念' && r.text && r.text.trim() !== '').sort((a, b) => a.timestamp - b.timestamp);
+            const otherChatter = otherRecords.filter(r => r.type === '碎碎念' && r.text && r.text.trim() !== '').sort((a, b) => a.timestamp - b.timestamp);
+            
+            if (myChatter.length === 0 && otherChatter.length === 0) {
+                return; // 如果没有碎碎念，不显示该部分
+            }
+            
+            // 创建碎碎念容器
+            const chatterSection = document.createElement('div');
+            chatterSection.className = 'chatter-section';
+            chatterSection.innerHTML = `<div class="chatter-section-title">碎碎念</div>`;
+            
+            // 创建两列布局
+            const columnsContainer = document.createElement('div');
+            columnsContainer.className = 'chatter-columns';
+            
+            // 左侧列：对方的碎碎念
+            const leftColumn = document.createElement('div');
+            leftColumn.className = 'chatter-column chatter-column-left';
+            const leftTitle = document.createElement('div');
+            leftTitle.className = 'chatter-column-title';
+            leftTitle.textContent = nickname + '的碎碎念';
+            leftColumn.appendChild(leftTitle);
+            
+            otherChatter.forEach(entry => {
+                const date = new Date(entry.timestamp);
+                const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+                const chatterEntry = document.createElement('div');
+                chatterEntry.className = 'chatter-entry';
+                chatterEntry.innerHTML = `
+                    <div class="chatter-date">${dateStr}</div>
+                    <div class="chatter-content">${entry.text}</div>
+                `;
+                leftColumn.appendChild(chatterEntry);
+            });
+            if (otherChatter.length === 0) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.className = 'empty-chatter';
+                emptyDiv.textContent = '暂无碎碎念';
+                leftColumn.appendChild(emptyDiv);
+            }
+            columnsContainer.appendChild(leftColumn);
+            
+            // 右侧列：我的碎碎念
+            const rightColumn = document.createElement('div');
+            rightColumn.className = 'chatter-column chatter-column-right';
+            const rightTitle = document.createElement('div');
+            rightTitle.className = 'chatter-column-title';
+            rightTitle.textContent = '我的碎碎念';
+            rightColumn.appendChild(rightTitle);
+            
+            myChatter.forEach(entry => {
+                const date = new Date(entry.timestamp);
+                const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+                const chatterEntry = document.createElement('div');
+                chatterEntry.className = 'chatter-entry';
+                chatterEntry.innerHTML = `
+                    <div class="chatter-date">${dateStr}</div>
+                    <div class="chatter-content">${entry.text}</div>
+                `;
+                rightColumn.appendChild(chatterEntry);
+            });
+            if (myChatter.length === 0) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.className = 'empty-chatter';
+                emptyDiv.textContent = '暂无碎碎念';
+                rightColumn.appendChild(emptyDiv);
+            }
+            columnsContainer.appendChild(rightColumn);
+            
+            chatterSection.appendChild(columnsContainer);
+            container.appendChild(chatterSection);
+        }
 
         // 渲染问题对（日记式展示）
         function renderQuestionPairs(myQuestions, otherQuestions, nickname = '对方') {
