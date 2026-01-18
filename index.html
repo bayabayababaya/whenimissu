@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>思念容器</title>
+    <title>思念木鱼</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='gold' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%23FFD700;stop-opacity:1' /><stop offset='100%' style='stop-color:%23FFA500;stop-opacity:1' /></linearGradient></defs><path d='M50,85 C50,85 15,60 15,40 C15,25 30,15 50,15 C70,15 85,25 85,40 C85,60 50,85 50,85 Z' fill='url(%23gold)' stroke='%23FF8C00' stroke-width='2'/></svg>">
     <style>
         * {
             margin: 0;
@@ -968,6 +969,95 @@
             font-size: 14px;
         }
 
+        /* 复制链接弹窗样式 */
+        .copy-link-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .copy-link-modal.active {
+            display: flex;
+        }
+
+        .copy-link-modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            padding: 32px;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            max-width: 90%;
+            width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .copy-link-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .copy-link-header h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1D1D1F;
+            margin: 0;
+        }
+
+        .copy-link-close-btn {
+            background: transparent;
+            border: none;
+            font-size: 32px;
+            color: #6B7280;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .copy-link-close-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: #1D1D1F;
+        }
+
+        .copy-link-input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            font-size: 14px;
+            color: #1D1D1F;
+            background: rgba(255, 255, 255, 0.9);
+            font-family: inherit;
+            box-sizing: border-box;
+            word-break: break-all;
+            margin-bottom: 16px;
+        }
+
+        .copy-link-hint {
+            font-size: 13px;
+            color: #6B7280;
+            text-align: center;
+            margin-top: 12px;
+        }
+
         .review-actions {
             display: flex;
             justify-content: center;
@@ -1211,6 +1301,18 @@
                 </div>
             </div>
 
+            <!-- 复制链接弹窗 -->
+            <div id="copyLinkModal" class="copy-link-modal">
+                <div class="copy-link-modal-content">
+                    <div class="copy-link-header">
+                        <h3>分享链接</h3>
+                        <button class="copy-link-close-btn" id="copyLinkCloseBtn">×</button>
+                    </div>
+                    <input type="text" class="copy-link-input" id="copyLinkInput" readonly>
+                    <div class="copy-link-hint">请长按上方链接进行复制</div>
+                </div>
+            </div>
+
             <!-- 碎碎念弹出框 -->
             <div id="chatterModal" class="chatter-modal">
                 <div class="chatter-modal-content">
@@ -1287,6 +1389,12 @@
         // 数据存储键名
         const STORAGE_KEY = 'missingsContainer';
         const QUESTION_STORAGE_KEY = 'missingsContainerQuestions';
+        const SHARE_DATA_PREFIX = 'share_';
+
+        // 生成6位随机短码（统一使用此方法）
+        function generateShortId() {
+            return Math.random().toString(36).substring(2, 8);
+        }
 
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
@@ -1634,23 +1742,38 @@
             return { question: '', answer: '' };
         }
 
-        // 缩短URL
-        async function shortenUrl(longUrl) {
-            try {
-                // 使用 is.gd API 缩短URL
-                const response = await fetch(`https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`);
-                const data = await response.json();
-                if (data.shorturl) {
-                    return data.shorturl;
-                } else {
-                    throw new Error('缩短失败');
+        // 显示复制链接弹窗
+        function showCopyModal(url) {
+            const modal = document.getElementById('copyLinkModal');
+            const input = document.getElementById('copyLinkInput');
+            const closeBtn = document.getElementById('copyLinkCloseBtn');
+            
+            input.value = url;
+            modal.classList.add('active');
+            
+            // 选中文本，方便用户复制
+            setTimeout(() => {
+                input.select();
+                input.setSelectionRange(0, 99999);
+            }, 100);
+            
+            // 关闭按钮事件
+            const closeHandler = () => {
+                modal.classList.remove('active');
+                closeBtn.removeEventListener('click', closeHandler);
+                modal.removeEventListener('click', modalHandler);
+            };
+            
+            const modalHandler = (e) => {
+                if (e.target === modal) {
+                    closeHandler();
                 }
-            } catch (error) {
-                console.error('URL缩短失败:', error);
-                // 如果缩短失败，返回null，使用原始URL
-                return null;
-            }
+            };
+            
+            closeBtn.addEventListener('click', closeHandler);
+            modal.addEventListener('click', modalHandler);
         }
+
 
         // 分享功能
         function initShare() {
@@ -1678,6 +1801,7 @@
                 const records = getRecords();
                 const allQuestionData = getAllQuestionData();
                 
+                // 准备分享数据
                 const dataToShare = {
                     records: records,
                     questions: allQuestionData,
@@ -1685,51 +1809,35 @@
                 };
                 
                 try {
-                    const jsonStr = JSON.stringify(dataToShare);
-                    const base64 = btoa(encodeURIComponent(jsonStr));
-                    // 使用动态路径生成分享链接，兼容GitHub Pages等部署环境
-                    // window.location.origin: 协议+域名+端口 (如 https://username.github.io)
-                    // window.location.pathname: 路径部分 (如 /repository-name/index.html 或 /index.html)
-                    // 这样生成的链接可以在任何部署环境下正常工作
-                    const longUrl = window.location.origin + window.location.pathname + '?data=' + base64;
+                    // 生成6位短ID
+                    const shortId = generateShortId();
                     
-                    // 缩短URL
-                    shortenUrl(longUrl).then(shortUrl => {
-                        const finalUrl = shortUrl || longUrl; // 如果缩短失败，使用原始URL
-                        navigator.clipboard.writeText(finalUrl).then(() => {
+                    // 将数据存储到localStorage，使用shortId作为key
+                    const storageKey = SHARE_DATA_PREFIX + shortId;
+                    localStorage.setItem(storageKey, JSON.stringify(dataToShare));
+                    
+                    // 手动构造短链接URL（不依赖window.location.href）
+                    const shareUrl = `${window.location.origin}${window.location.pathname}?to=${shortId}`;
+                    
+                    // 在用户手势上下文中直接调用clipboard API
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(shareUrl).then(() => {
                             alert('分享链接已复制到剪贴板！');
                         }).catch(() => {
-                            // 降级方案
-                            const textarea = document.createElement('textarea');
-                            textarea.value = finalUrl;
-                            document.body.appendChild(textarea);
-                            textarea.select();
-                            document.execCommand('copy');
-                            document.body.removeChild(textarea);
-                            alert('分享链接已复制到剪贴板！');
+                            // clipboard API失败，显示弹窗让用户手动复制
+                            showCopyModal(shareUrl);
                         });
-                    }).catch(() => {
-                        // 如果缩短失败，使用原始URL
-                        navigator.clipboard.writeText(longUrl).then(() => {
-                            alert('分享链接已复制到剪贴板！');
-                        }).catch(() => {
-                            // 降级方案
-                            const textarea = document.createElement('textarea');
-                            textarea.value = longUrl;
-                            document.body.appendChild(textarea);
-                            textarea.select();
-                            document.execCommand('copy');
-                            document.body.removeChild(textarea);
-                            alert('分享链接已复制到剪贴板！');
-                        });
-                    });
+                    } else {
+                        // 不支持clipboard API，显示弹窗
+                        showCopyModal(shareUrl);
+                    }
                 } catch (error) {
                     alert('分享失败，请重试');
                 }
             });
 
             // 加载复盘页面按钮
-            document.getElementById('loadBtn').addEventListener('click', async function() {
+            document.getElementById('loadBtn').addEventListener('click', function() {
                 const shareInput = document.getElementById('shareInput');
                 const url = shareInput.value.trim();
                 
@@ -1738,56 +1846,92 @@
                     return;
                 }
                 
-                // 解析URL中的data参数
+                // 解析URL中的to参数（短ID）
                 try {
-                    let dataParam = '';
-                    let urlToParse = url;
+                    let shortId = '';
                     
                     // 如果是缩短的URL（如 is.gd），需要先获取原始URL
                     if (url.includes('is.gd/') || url.includes('v.gd/') || url.includes('tinyurl.com/')) {
                         // 尝试获取原始URL
-                        try {
-                            const response = await fetch(`https://is.gd/forward.php?format=json&shorturl=${encodeURIComponent(url)}`);
-                            const data = await response.json();
-                            if (data.url) {
-                                urlToParse = data.url;
-                            }
-                        } catch (e) {
-                            console.error('获取原始URL失败:', e);
-                        }
+                        fetch(`https://is.gd/forward.php?format=json&shorturl=${encodeURIComponent(url)}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.url) {
+                                    loadFromShortId(data.url);
+                                } else {
+                                    alert('无法获取原始链接');
+                                }
+                            })
+                            .catch(() => {
+                                alert('无法解析缩短链接');
+                            });
+                        return;
                     }
                     
-                    if (urlToParse.includes('?data=')) {
-                        // 完整URL格式
-                        const urlObj = new URL(urlToParse);
-                        dataParam = urlObj.searchParams.get('data');
-                    } else if (urlToParse.startsWith('data=')) {
-                        // 只有data参数
-                        dataParam = urlToParse.substring(5);
+                    // 直接解析URL
+                    if (url.includes('?to=')) {
+                        const urlObj = new URL(url);
+                        shortId = urlObj.searchParams.get('to');
+                    } else if (url.startsWith('to=')) {
+                        shortId = url.substring(3);
                     } else {
-                        // 尝试直接作为base64解码
-                        dataParam = urlToParse;
+                        // 尝试直接作为shortId
+                        shortId = url;
                     }
                     
-                    if (!dataParam) {
+                    if (!shortId) {
                         alert('无效的分享链接格式');
                         return;
                     }
                     
-                    const jsonStr = decodeURIComponent(atob(dataParam));
-                    const sharedData = JSON.parse(jsonStr);
+                    loadFromShortId(shortId);
                     
-                    // 跳转到复盘页面
+                } catch (error) {
+                    console.error('链接解析失败:', error);
+                    alert('分享链接格式错误，无法加载。请检查链接是否正确。');
+                }
+            });
+            
+            // 从shortId加载数据
+            function loadFromShortId(shortIdOrUrl) {
+                let shortId = shortIdOrUrl;
+                
+                // 如果是完整URL，提取shortId
+                if (shortIdOrUrl.includes('?to=')) {
+                    try {
+                        const urlObj = new URL(shortIdOrUrl);
+                        shortId = urlObj.searchParams.get('to');
+                    } catch (e) {
+                        // 如果不是有效URL，直接使用
+                    }
+                }
+                
+                if (!shortId) {
+                    alert('无效的分享链接');
+                    return;
+                }
+                
+                // 从localStorage读取数据
+                const storageKey = SHARE_DATA_PREFIX + shortId;
+                const storedData = localStorage.getItem(storageKey);
+                
+                if (!storedData) {
+                    alert('分享链接已过期或不存在');
+                    return;
+                }
+                
+                try {
+                    const sharedData = JSON.parse(storedData);
                     initReviewButtons();
                     showReviewPage(sharedData);
                     
                     // 清空输入框
-                    shareInput.value = '';
+                    document.getElementById('shareInput').value = '';
                 } catch (error) {
                     console.error('数据解析失败:', error);
-                    alert('分享链接格式错误，无法加载。请检查链接是否正确。');
+                    alert('数据格式错误，无法加载');
                 }
-            });
+            }
 
             // 输入框回车键提交
             document.getElementById('shareInput').addEventListener('keypress', function(e) {
@@ -1828,19 +1972,67 @@
         // 检查URL参数
         function checkURLParams() {
             const urlParams = new URLSearchParams(window.location.search);
-            const dataParam = urlParams.get('data');
+            const toParam = urlParams.get('to');
             
-            if (dataParam) {
-                try {
-                    const jsonStr = decodeURIComponent(atob(dataParam));
-                    const sharedData = JSON.parse(jsonStr);
-                    initReviewButtons();
-                    showReviewPage(sharedData);
-                } catch (error) {
-                    console.error('数据解析失败:', error);
-                    alert('数据格式错误，无法加载');
+            if (toParam) {
+                // 从localStorage读取数据
+                const storageKey = SHARE_DATA_PREFIX + toParam;
+                const storedData = localStorage.getItem(storageKey);
+                
+                if (storedData) {
+                    try {
+                        const sharedData = JSON.parse(storedData);
+                        initReviewButtons();
+                        showReviewPage(sharedData);
+                    } catch (error) {
+                        console.error('数据解析失败:', error);
+                        alert('数据格式错误，无法加载');
+                    }
+                } else {
+                    alert('分享链接已过期或不存在');
                 }
             }
+        }
+
+        // 兼容旧格式数据解析（支持压缩格式和旧格式）
+        function decompressData(data) {
+            // 解压缩records
+            let records = [];
+            if (data.r) {
+                // 新压缩格式
+                records = data.r.map(r => ({
+                    timestamp: r.ts,
+                    type: r.t,
+                    text: r.txt || ''
+                }));
+            } else if (data.records) {
+                // 旧格式
+                records = data.records;
+            }
+            
+            // 解压缩questions
+            let questions = {};
+            if (data.q) {
+                // 新压缩格式
+                for (const key in data.q) {
+                    questions[key] = data.q[key].map(q => ({
+                        answer: q.a,
+                        timestamp: q.ts
+                    }));
+                }
+            } else if (data.questions) {
+                // 旧格式
+                questions = data.questions;
+            } else if (data.question) {
+                // 更旧的格式
+                questions = { [data.question.question]: { answer: data.question.answer } };
+            }
+            
+            return {
+                records: records,
+                questions: questions,
+                nickname: data.n || data.nickname || '对方'
+            };
         }
 
         // 显示复盘页面
@@ -1848,27 +2040,33 @@
             document.getElementById('homePage').classList.remove('active');
             document.getElementById('reviewPage').classList.add('active');
             
-            // 获取昵称，如果没有则使用默认值
-            const nickname = sharedData.nickname || '对方';
+            // 兼容旧格式数据（如果数据是压缩格式，需要解压缩）
+            let records, questions, nickname;
+            
+            if (sharedData.records && Array.isArray(sharedData.records)) {
+                // 新格式：直接使用
+                records = sharedData.records;
+                questions = sharedData.questions || {};
+                nickname = sharedData.nickname || '对方';
+            } else {
+                // 旧格式：需要解压缩
+                const decompressed = decompressData(sharedData);
+                records = decompressed.records;
+                questions = decompressed.questions;
+                nickname = decompressed.nickname;
+            }
             
             // 更新标题
             document.getElementById('leftColumnTitle').textContent = nickname + '的记录';
             document.getElementById('rightColumnTitle').textContent = '我的记录';
             
             // 左侧显示分享者的记录（带昵称），右侧显示当前查看者的记录（我的记录）
-            // renderUnifiedTimeline 的第一个参数会标记为 source: 'my'，但由于 leftRecords/rightRecords 已交换，实际显示在右边
-            // 第二个参数会标记为 source: 'other'，但由于 leftRecords/rightRecords 已交换，实际显示在左边
             const currentUserRecords = getRecords();  // 当前查看者的记录，应该显示在右边（我的记录）
-            const sharedUserRecords = sharedData.records || [];  // 分享者的记录，应该显示在左边（昵称的记录）
+            const sharedUserRecords = records;  // 分享者的记录，应该显示在左边（昵称的记录）
             const currentUserQuestions = getAllQuestionData();
-            // 兼容旧格式（单个问题）和新格式（多个问题）
-            const sharedUserQuestions = sharedData.questions || (sharedData.question ? { [sharedData.question.question]: { answer: sharedData.question.answer } } : {});
+            const sharedUserQuestions = questions;
             
             // 左侧显示分享者的记录（[昵称]的记录），右侧显示当前查看者的记录（我的记录）
-            // renderUnifiedTimeline 的第一个参数会标记为 source: 'my'，第二个参数会标记为 source: 'other'
-            // leftRecords = source: 'other' (分享者) -> 左边
-            // rightRecords = source: 'my' (当前查看者) -> 右边
-            // 所以：分享者作为第二个参数（source: 'other' -> 左边），当前查看者作为第一个参数（source: 'my' -> 右边）
             renderUnifiedTimeline(currentUserRecords, sharedUserRecords);
             renderChatter(currentUserRecords, sharedUserRecords, nickname);
             renderQuestionPairs(currentUserQuestions, sharedUserQuestions, nickname);
